@@ -8,12 +8,33 @@
     
 </head>
 <body>
-    <div class="card">
+
+    <!-- <h1 class="app-title">🌤 Weather App</h1> -->
+
+
+    <div class="card" id="weatherCard">
         <div class="search">
             <input type="text" placeholder="enter city name" spellcheck="false">
             <button ><img src="searchimg.png" alt="Serach"></button>
         </div>
-        <div class="Weather">
+
+
+     <div class="loader"></div>
+
+<div class="not-found">
+    <div class="emoji">😕</div>
+    <p>City Not Found</p>
+</div>
+
+
+
+
+     <div class="error">
+        <p>Invalid City name </p>
+     </div>
+
+
+        <div class="weather">
             <img src="partly-cloudy.png" alt="rain" class="weather-icon">
             <h1 class="temp">22°c</h1>
             <h2 class="city">New York</h2>
@@ -29,7 +50,7 @@
 
 
             <div class="col">
-                <img src="wind (1).png">
+                <img src="wind.png">
                 <div>
                     <p class="wind">15 km/h</p>
                     <p>Wind Speed</p>
@@ -44,54 +65,136 @@
         </div>
 
 
-
-
-
     </div>
-  <script>
-    const apiKey="584f9e1d275eac3d88b9868179def7e2";
-        const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
-
-        const searchBox=document.querySelector(".search input");
-          const searchBtn=document.querySelector(".search button");
-
-
-        async function checkWeather(city){
-            const response=await fetch(apiUrl+ city +`&appid=${apiKey}`)
-
-            var data=await  response.json();
-            console.log(data);
 
 
 
 
-            document.querySelector(".city").innerHTML=data.name;
-            document.querySelector(".temp").innerHTML=Math.round(data.main.temp) + "°C"
-             document.querySelector(".humidity").innerHTML=data.main.humidity+"%";
-              document.querySelector(".wind").innerHTML=data.wind.speed+" km/h";
-            
+    <!-- Background Video -->
+    <video autoplay muted loop id="bgVideo">
+        <source src="153976-817104245.mp4" type="video/mp4">
+    </video>
+
+    <!-- Weather Card -->
+    <!-- <div class="card" id="weatherCard">
+        <-- your existing content -->
+  <!----  </div> -->
 
 
-            //   if(data.weather[0].main== "clouds"){
+<script>
+const apiKey = "584f9e1d275eac3d88b9868179def7e2";
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
-            //   }
+const searchBox = document.querySelector(".search input");
+const searchBtn = document.querySelector(".search button");
 
-          
+const loader = document.querySelector(".loader");
+const weather = document.querySelector(".weather");
+const details = document.querySelector(".details");
+const notFound = document.querySelector(".not-found");
+const card = document.getElementById("weatherCard");
+
+async function checkWeather(city) {
+
+    if (city.trim() === "") return;
+
+    // Reset UI
+    loader.style.display = "block";
+    weather.style.display = "none";
+    details.style.display = "none";
+    notFound.style.display = "none";
+
+    try {
+        const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+        const data = await response.json();
+
+        loader.style.display = "none";
+
+        // ❌ Invalid city
+        if (data.cod === "404") {
+            notFound.style.display = "block";
+            card.classList.add("blur");
+            card.style.backgroundImage =
+                "url('invalid-city-bg.jpg')";
+            return;
+        }
+
+        // ✅ Valid city
+        card.classList.remove("blur");
+
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML =
+            Math.round(data.main.temp) + "°C";
+        document.querySelector(".humidity").innerHTML =
+            data.main.humidity + "%";
+        document.querySelector(".wind").innerHTML =
+            data.wind.speed + " km/h";
+
+        weather.style.display = "block";
+        details.style.display = "flex";
+
+        changeBackground(data.weather[0].main, data.main.temp);
+
+    } catch (error) {
+        loader.style.display = "none";
+        notFound.style.display = "block";
+    }
 }
 
+// 🔍 Button click
+searchBtn.addEventListener("click", () => {
+    checkWeather(searchBox.value);
+});
 
-            
-        
+// ⌨️ Enter key support
+searchBox.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+        checkWeather(searchBox.value);
+    }
+});
 
-//when i click on search btn
+// 🎨 Background change logic
+function changeBackground(weather, temp) {
 
-        searchBtn.addEventListener("click",()=>{
-            checkWeather(searchBox.value);
-            // checkWeather()
-        })
+    if (
+        weather === "Rain" ||
+        weather === "Drizzle" ||
+        weather === "Thunderstorm"
+    ) {
+        card.style.backgroundImage =
+            "url('pexels-luca-chiandoni-1804165-3375674.jpg')";
+    }
+    else if (temp < 5) {
+        card.style.backgroundImage =
+            "url('pexels-luca-chiandoni-1804165-3375674.jpg')";
+    }
+    else if (temp <= 10) {
+        card.style.backgroundImage =
+            "url('pexels-aleksa-kalajdzic-2146796-3780902.jpg')";
+    }
+    else if (temp <= 20) {
+        card.style.backgroundImage =
+            "url('forest-3622519_1280.jpg')";
+    }
+    else if (temp <= 25) {
+        card.style.backgroundImage =
+            "url('pexels-keat007-31579505.jpg')";
+    }
+    else if (temp <= 30) {
+        card.style.backgroundImage =
+            "url('taylor-van-riper-yQorCngxzwI-unsplash.jpg')";
+    }
+    else {
+        card.style.backgroundImage =
+            "url('tree-3189339_1280.jpg')";
+    }
+}
+</script>
 
-        
-        </script>
+
+
+
+  
 </body>
 </html>   
 
