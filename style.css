@@ -53,17 +53,17 @@ body{
 /* ================= CARD ================= */
  .card{
     width: 90%;
-    max-width: 470px;
-    min-height: 590px;
+    max-width: 450px;
+    min-height: 600px;
     /* background: linear-gradient(135deg,#00feba,#5b548a); */
     background: url("tree-3189339_1280.jpg");
     color: #ececf9;
-    margin-top: 16px;
+    margin-top: 40px;
     border-radius: 25px;
     padding:  35px;
     text-align: center;
     /* margin-bottom: 150px; */
-    margin-bottom: 45px;
+    margin-bottom: 70px;
     
 
 
@@ -193,7 +193,7 @@ body{
     }
 
 
-    
+
 
     .weather-icon{
         width: 140px;
@@ -270,7 +270,7 @@ body{
 
 .not-found p {
     font-size: 22px;
-    margin-top: 10px;
+    margin-top: 40px;
     opacity: 0.9;
 }
 
