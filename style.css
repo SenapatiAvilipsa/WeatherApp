@@ -13,7 +13,7 @@ body{
     /* align-items: flex-start; */
     align-items: center;
     overflow: hidden;
-    padding-bottom: 100px;
+    
     flex-direction: column;
 }
 
@@ -58,20 +58,20 @@ body{
     /* background: linear-gradient(135deg,#00feba,#5b548a); */
     background: url("tree-3189339_1280.jpg");
     color: #ececf9;
-    margin-top: 20px;
+    margin-top: 16px;
     border-radius: 25px;
-    padding: 40px 35px;
+    padding:  35px;
     text-align: center;
     /* margin-bottom: 150px; */
     margin-bottom: 45px;
-} 
+    
 
 
 
     /* important for image */
-   .card{ background-size: cover;
+    background-size: cover;
     background-position: center;
-    transition: background-image 0.5s ease;
+    transition: all 0.4s ease;
    }
 
 
@@ -113,6 +113,15 @@ body{
 }
 
 /* ================= WEATHER ================= */
+.weather{
+    min-height: 220px;
+}
+.details{
+    min-height: 120px;
+}
+
+
+
 .weather-icon{
     width: 170px;
     margin-top: 30px;
@@ -168,9 +177,23 @@ body{
 @media (max-width: 480px){
 
     .card{
-        padding: 30px 20px;
+        padding: 25px 18px;
         min-height: 560px;
     }
+
+
+    .search input {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .search button {
+        width: 48px;
+        height: 48px;
+    }
+
+
+    
 
     .weather-icon{
         width: 140px;
